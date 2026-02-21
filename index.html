@@ -5,15 +5,10 @@
   <title>Happy Birthday Kanmani 💖</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       min-height: 100vh;
@@ -27,22 +22,15 @@
       position: fixed;
       color: rgba(255,255,255,0.6);
       animation: floatUp 8s linear infinite;
-      z-index: 1;
       pointer-events: none;
+      z-index: 1;
     }
 
     @keyframes floatUp {
-      from {
-        transform: translateY(100vh);
-        opacity: 1;
-      }
-      to {
-        transform: translateY(-10vh);
-        opacity: 0;
-      }
+      from { transform: translateY(100vh); opacity: 1; }
+      to { transform: translateY(-10vh); opacity: 0; }
     }
 
-    /* Center layout */
     .center {
       min-height: 100vh;
       display: flex;
@@ -80,7 +68,7 @@
       position: relative;
       width: 100%;
       max-width: 420px;
-      min-height: 520px; /* IMPORTANT */
+      min-height: 520px;
       padding: 22px;
       border-radius: 24px;
       box-shadow: 0 20px 50px rgba(0,0,0,0.35);
@@ -91,17 +79,11 @@
     }
 
     @keyframes popIn {
-      from {
-        transform: scale(0.7);
-        opacity: 0;
-      }
-      to {
-        transform: scale(1);
-        opacity: 1;
-      }
+      from { transform: scale(0.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
 
-    /* Card background slideshow */
+    /* Background slideshow */
     .card-bg {
       position: absolute;
       inset: 0;
@@ -116,49 +98,73 @@
       object-fit: cover;
       opacity: 0;
       transition: opacity 1s ease;
+      filter: blur(2px);
     }
 
     .card-bg img.active {
       opacity: 1;
     }
 
-    /* Dark overlay */
     .card-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(0,0,0,0.45);
+      background: rgba(0,0,0,0.5);
       z-index: 1;
     }
 
-    /* Card content */
     .card-content {
       position: relative;
       z-index: 2;
     }
 
-    .card h1 {
+    h1 {
       font-family: 'Pacifico', cursive;
       font-size: 28px;
       margin-bottom: 12px;
       color: #ffd1e8;
-      text-align: center;
     }
 
-    .card p {
+    p {
       font-size: 14.8px;
       line-height: 1.65;
-      color: #fff;
     }
 
-    audio {
+    /* Secret message */
+    .secret {
       display: none;
+      margin-top: 14px;
+      padding: 12px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 14px;
+      font-size: 14px;
+      animation: fadeIn 1s ease forwards;
     }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Sparkles */
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      animation: sparkle 1s ease-out forwards;
+      font-size: 18px;
+      z-index: 5;
+    }
+
+    @keyframes sparkle {
+      0% { transform: scale(0.5); opacity: 1; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+
+    audio { display: none; }
   </style>
 </head>
 <body>
 
 <script>
-  // Floating hearts
   for (let i = 0; i < 25; i++) {
     const h = document.createElement("div");
     h.className = "heart";
@@ -170,17 +176,14 @@
   }
 </script>
 
-<!-- Intro -->
 <div class="center" id="intro">
   <div class="heart-btn" onclick="openCard()">❤️</div>
   <div class="tap-text">Tap me, Kanmani 💕</div>
 </div>
 
-<!-- Card -->
 <div class="center">
   <div class="card" id="card">
 
-    <!-- Background slideshow -->
     <div class="card-bg">
       <img src="photos/pic1.jpeg" class="active">
       <img src="photos/pic2.jpeg">
@@ -192,7 +195,6 @@
 
     <div class="card-overlay"></div>
 
-    <!-- Content -->
     <div class="card-content">
       <h1>Happy 25th Birthday, My Kanmani 💖</h1>
 
@@ -210,27 +212,66 @@
 
         Stay cute, stay strong, stay my kanmani forever. 🌸
       </p>
+
+      <div class="secret" id="secret">
+        Kanmani… no matter where life takes us, my heart will always find you.
+        I love you more than words can say 💖
+      </div>
     </div>
 
   </div>
 </div>
 
-<!-- Audio -->
 <audio id="bgMusic" src="audio/blue.mp3" loop></audio>
 
 <script>
+  let slideIndex = 0;
+  let pressTimer;
+  let revealed = false;
+
   function openCard() {
     document.getElementById("intro").style.display = "none";
-    document.getElementById("card").style.display = "block";
+    const card = document.getElementById("card");
+    card.style.display = "block";
 
     startSlideshow();
+    document.getElementById("bgMusic").play().catch(() => {});
 
-    const music = document.getElementById("bgMusic");
-    music.play().catch(() => {});
+    // Secret listeners (MUST be attached AFTER card is visible)
+    card.addEventListener("touchstart", startPress);
+    card.addEventListener("touchend", cancelPress);
+    card.addEventListener("mousedown", startPress);
+    card.addEventListener("mouseup", cancelPress);
   }
 
-  // Background slideshow
-  let slideIndex = 0;
+  function startPress() {
+    pressTimer = setTimeout(revealSecret, 2000);
+  }
+
+  function cancelPress() {
+    clearTimeout(pressTimer);
+  }
+
+  function revealSecret() {
+    if (revealed) return;
+    revealed = true;
+
+    document.getElementById("secret").style.display = "block";
+    sparkleBurst();
+  }
+
+  function sparkleBurst() {
+    for (let i = 0; i < 20; i++) {
+      const s = document.createElement("div");
+      s.className = "sparkle";
+      s.innerHTML = "✨";
+      s.style.left = Math.random() * 100 + "vw";
+      s.style.top = Math.random() * 100 + "vh";
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 1000);
+    }
+  }
+
   function startSlideshow() {
     const slides = document.querySelectorAll(".card-bg img");
     setInterval(() => {
