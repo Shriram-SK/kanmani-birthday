@@ -12,43 +12,129 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      height: 100vh;
-      overflow: hidden;
       font-family: 'Poppins', sans-serif;
-    }
-
-    /* Background */
-    .bg {
-      position: fixed;
-      inset: 0;
-      background: url("https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e") center/cover;
-      filter: blur(6px) brightness(0.75);
-      z-index: -2;
-    }
-
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(255,182,213,0.6), rgba(255,142,191,0.8));
-      z-index: -1;
+      background: linear-gradient(to bottom, #ffb6d5, #ff8ebf);
+      overflow-x: hidden;
     }
 
     /* Floating hearts */
     .heart {
-      position: absolute;
+      position: fixed;
       color: rgba(255,255,255,0.6);
       animation: floatUp 8s linear infinite;
       z-index: 1;
     }
 
     @keyframes floatUp {
-      from { transform: translateY(100vh) scale(1); opacity: 1; }
-      to { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+      from { transform: translateY(100vh); opacity: 1; }
+      to { transform: translateY(-10vh); opacity: 0; }
+    }
+
+    .center {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .heart-btn {
+      font-size: 90px;
+      cursor: pointer;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    .tap-text {
+      color: white;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    /* Card */
+    .card {
+      display: none;
+      position: relative;
+      max-width: 420px;
+      width: 100%;
+      padding: 22px;
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+      animation: popIn 0.8s ease forwards;
+      color: white;
+      overflow: hidden;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* Card background slideshow */
+    .card-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .card-bg img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .card-bg img.active {
+      opacity: 1;
+    }
+
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 1;
+    }
+
+    /* Card content above bg */
+    .card-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: #ffd1e8;
+    }
+
+    p {
+      font-size: 14.8px;
+      line-height: 1.6;
+    }
+
+    .footer {
+      margin-top: 12px;
+      font-size: 14px;
+      color: #ffd1e8;
+      text-align: right;
     }
 
     /* Sparkles */
     .sparkle {
-      position: absolute;
+      position: fixed;
       pointer-events: none;
       animation: sparkle 1s ease-out forwards;
       font-size: 18px;
@@ -60,156 +146,78 @@
       100% { transform: scale(1.6); opacity: 0; }
     }
 
-    /* Center */
-    .center {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      z-index: 2;
-    }
-
-    .heart-btn {
-      font-size: 90px;
-      cursor: pointer;
-      animation: pulse 1.5s infinite;
-      user-select: none;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.15); }
-      100% { transform: scale(1); }
-    }
-
-    .tap-text {
-      margin-top: 10px;
-      font-size: 18px;
-      color: #fff;
-    }
-
-    /* Card */
-    .card {
-      display: none;
-      background: rgba(255,255,255,0.96);
-      width: 90%;
+    /* Timeline */
+    .timeline {
       max-width: 420px;
-      padding: 22px;
-      border-radius: 24px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-      animation: popIn 0.8s ease forwards;
+      margin: 40px auto;
+      padding: 0 20px;
     }
 
-    @keyframes popIn {
-      from { transform: scale(0.7); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    .card h1 {
+    .timeline h2 {
+      text-align: center;
       font-family: 'Pacifico', cursive;
-      color: #ff4d88;
-      font-size: 28px;
-      margin-bottom: 10px;
+      color: white;
+      font-size: 26px;
+      margin-bottom: 20px;
     }
 
-    /* Slideshow */
-    .slideshow {
-      position: relative;
-      width: 100%;
-      height: 160px;
-      margin: 12px 0;
-      overflow: hidden;
-      border-radius: 16px;
-    }
-
-    .slideshow img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 1s ease;
-    }
-
-    .slideshow img.active {
-      opacity: 1;
-    }
-
-    .card p {
-      font-size: 14.7px;
-      line-height: 1.6;
+    .event {
+      background: rgba(255,255,255,0.9);
+      padding: 16px;
+      border-radius: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       color: #444;
     }
 
-    .footer {
-      margin-top: 12px;
+    .event span {
+      font-size: 18px;
+    }
+
+    .event p {
+      margin-top: 6px;
       font-size: 14px;
-      color: #ff4d88;
-      text-align: right;
     }
 
-    /* Secret */
-    .secret {
-      display: none;
-      margin-top: 14px;
-      padding: 12px;
-      font-size: 14px;
-      line-height: 1.6;
-      color: #ff4d88;
-      background: #fff0f6;
-      border-radius: 16px;
-      animation: fadeIn 1s ease forwards;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    iframe { display: none; }
+    audio { display: none; }
   </style>
 </head>
 <body>
 
-  <div class="bg"></div>
-  <div class="overlay"></div>
+<script>
+  for (let i = 0; i < 25; i++) {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "💖";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = (16 + Math.random() * 24) + "px";
+    h.style.animationDuration = (5 + Math.random() * 5) + "s";
+    document.body.appendChild(h);
+  }
+</script>
 
-  <!-- Floating hearts -->
-  <script>
-    for (let i = 0; i < 30; i++) {
-      const h = document.createElement("div");
-      h.className = "heart";
-      h.innerHTML = "💖";
-      h.style.left = Math.random() * 100 + "vw";
-      h.style.fontSize = (16 + Math.random() * 26) + "px";
-      h.style.animationDuration = (5 + Math.random() * 5) + "s";
-      document.body.appendChild(h);
-    }
-  </script>
+<div class="center" id="intro">
+  <div class="heart-btn" onclick="openCard()">❤️</div>
+  <div class="tap-text">Tap me, Kanmani 💕</div>
+</div>
 
-  <!-- Intro -->
-  <div class="center" id="intro">
-    <div class="heart-btn" onclick="openCard()">❤️</div>
-    <div class="tap-text">Tap me, Kanmani 💕</div>
-  </div>
+<div class="center">
+  <div class="card" id="card">
 
-  <!-- Card -->
-  <div class="center">
-    <div class="card" id="card">
+    <!-- Background slideshow -->
+    <div class="card-bg">
+      <img src="photos/pic1.jpeg" class="active">
+      <img src="photos/pic2.jpeg">
+      <img src="photos/pic3.jpeg">
+      <img src="photos/pic4.jpeg">
+      <img src="photos/pic5.jpeg">
+      <img src="photos/pic6.jpeg">
+    </div>
+    <div class="card-overlay"></div>
+
+    <!-- Content -->
+    <div class="card-content">
       <h1>Happy 25th Birthday, My Kanmani 💖</h1>
-
-      <!-- SLIDESHOW -->
-      <div class="slideshow">
-        <img src="photos/pic1.jpeg" class="active">
-        <img src="photos/pic2.jpeg">
-        <img src="photos/pic3.jpeg">
-        <img src="photos/pic4.jpeg">
-        <img src="photos/pic5.jpeg">
-        <img src="photos/pic6.jpeg">
-      </div>
 
       <p>
         To my most precious girl ✨<br><br>
@@ -227,86 +235,70 @@
       </p>
 
       <div class="footer">— With all my love ❤️</div>
-
-      <div class="secret" id="secret">
-        Kanmani… no matter where life takes us, my heart will always find you.
-        I love you more than words can say 💖
-      </div>
     </div>
   </div>
+</div>
 
-  <!-- Music -->
-  <iframe id="music" allow="autoplay"></iframe>
+<!-- Timeline -->
+<div class="timeline">
+  <h2>Our Story 💫</h2>
 
-  <script>
-    /* Sparkles */
-    function sparkleBurst() {
-      for (let i = 0; i < 25; i++) {
-        const s = document.createElement("div");
-        s.className = "sparkle";
-        s.innerHTML = "✨";
-        s.style.left = (50 + (Math.random() * 40 - 20)) + "vw";
-        s.style.top = (50 + (Math.random() * 40 - 20)) + "vh";
-        document.body.appendChild(s);
-        setTimeout(() => s.remove(), 1000);
-      }
+  <div class="event">
+    <span>❤️ When we first talked</span>
+    <p>I never knew one conversation could change everything.</p>
+  </div>
+
+  <div class="event">
+    <span>🎂 Your 25th Birthday</span>
+    <p>The day I made this just to see you smile.</p>
+  </div>
+
+  <div class="event">
+    <span>♾️ Today & Always</span>
+    <p>No matter where life takes us, my heart chooses you.</p>
+  </div>
+</div>
+
+<!-- Audio -->
+<audio id="bgMusic" src="audio/blue.mp3" loop></audio>
+
+<script>
+  /* Sparkles */
+  function sparkleBurst() {
+    for (let i = 0; i < 25; i++) {
+      const s = document.createElement("div");
+      s.className = "sparkle";
+      s.innerHTML = "✨";
+      s.style.left = Math.random() * 100 + "vw";
+      s.style.top = Math.random() * 100 + "vh";
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 1000);
     }
+  }
 
-    /* Open card */
-    function openCard() {
-      document.getElementById("intro").style.display = "none";
-      document.getElementById("card").style.display = "block";
+  /* Open card */
+  function openCard() {
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("card").style.display = "block";
 
-      sparkleBurst();
-      startSlideshow();
+    sparkleBurst();
+    startSlideshow();
 
-      const iframe = document.getElementById("music");
-      iframe.src =
-        "https://www.youtube.com/embed/IpFX2vq8HKw?enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=IpFX2vq8HKw";
+    const music = document.getElementById("bgMusic");
+    music.play();
+  }
 
-      setTimeout(() => {
-        iframe.contentWindow.postMessage(
-          '{"event":"command","func":"unMute","args":""}',
-          "*"
-        );
-      }, 600);
-    }
-
-    /* Slideshow logic */
-    let slideIndex = 0;
-    let slides;
-
-    function startSlideshow() {
-      slides = document.querySelectorAll(".slideshow img");
-      setInterval(() => {
-        slides[slideIndex].classList.remove("active");
-        slideIndex = (slideIndex + 1) % slides.length;
-        slides[slideIndex].classList.add("active");
-      }, 2500);
-    }
-
-    /* Secret reveal (tap & hold) */
-    let pressTimer;
-    const card = document.getElementById("card");
-    const secret = document.getElementById("secret");
-
-    function revealSecret() {
-      if (secret.style.display !== "block") {
-        secret.style.display = "block";
-        sparkleBurst();
-      }
-    }
-
-    card.addEventListener("touchstart", () => {
-      pressTimer = setTimeout(revealSecret, 2000);
-    });
-    card.addEventListener("touchend", () => clearTimeout(pressTimer));
-    card.addEventListener("mousedown", () => {
-      pressTimer = setTimeout(revealSecret, 2000);
-    });
-    card.addEventListener("mouseup", () => clearTimeout(pressTimer));
-  </script>
+  /* Slideshow */
+  let slideIndex = 0;
+  function startSlideshow() {
+    const slides = document.querySelectorAll(".card-bg img");
+    setInterval(() => {
+      slides[slideIndex].classList.remove("active");
+      slideIndex = (slideIndex + 1) % slides.length;
+      slides[slideIndex].classList.add("active");
+    }, 2500);
+  }
+</script>
 
 </body>
 </html>
-
