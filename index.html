@@ -5,7 +5,7 @@
   <title>Happy Birthday Kanmani 💖</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Google Font -->
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
@@ -29,7 +29,6 @@
     .heart {
       position: absolute;
       color: rgba(255, 255, 255, 0.6);
-      font-size: 20px;
       animation: floatUp 8s linear infinite;
     }
 
@@ -44,13 +43,12 @@
       }
     }
 
-    /* Center container */
+    /* Center intro */
     .center {
       text-align: center;
       z-index: 2;
     }
 
-    /* Big heart button */
     .heart-btn {
       font-size: 90px;
       cursor: pointer;
@@ -75,11 +73,12 @@
       display: none;
       background: white;
       width: 90%;
-      max-width: 400px;
+      max-width: 420px;
       padding: 25px;
-      border-radius: 20px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      border-radius: 22px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
       animation: popIn 0.8s ease forwards;
+      z-index: 3;
     }
 
     @keyframes popIn {
@@ -97,12 +96,13 @@
       font-family: 'Pacifico', cursive;
       color: #ff4d88;
       font-size: 28px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      text-align: center;
     }
 
     .card p {
       font-size: 15px;
-      line-height: 1.6;
+      line-height: 1.65;
       color: #444;
     }
 
@@ -110,6 +110,7 @@
       margin-top: 15px;
       font-size: 14px;
       color: #ff4d88;
+      text-align: right;
     }
 
     iframe {
@@ -119,7 +120,7 @@
 </head>
 <body>
 
-  <!-- Floating hearts -->
+  <!-- Floating hearts generator -->
   <script>
     for (let i = 0; i < 30; i++) {
       const heart = document.createElement("div");
@@ -127,12 +128,12 @@
       heart.innerHTML = "💖";
       heart.style.left = Math.random() * 100 + "vw";
       heart.style.animationDuration = (5 + Math.random() * 5) + "s";
-      heart.style.fontSize = (16 + Math.random() * 24) + "px";
+      heart.style.fontSize = (16 + Math.random() * 26) + "px";
       document.body.appendChild(heart);
     }
   </script>
 
-  <!-- Center content -->
+  <!-- Intro -->
   <div class="center" id="intro">
     <div class="heart-btn" onclick="openCard()">❤️</div>
     <div class="tap-text">Tap me, Kanmani 💕</div>
@@ -140,40 +141,50 @@
 
   <!-- Birthday Card -->
   <div class="card" id="card">
-    <h1>Happy 25th Birthday, Kanmani 💖</h1>
+    <h1>Happy 25th Birthday, My Kanmani 💖</h1>
     <p>
       To my most precious girl ✨<br><br>
-      Today isn’t just your birthday — it’s the day the world became a little
-      more beautiful because <b>you</b> exist. 💫<br><br>
+      Today isn’t just your birthday — it’s the day the world became
+      a little brighter because <b>you</b> exist. 💫<br><br>
 
       Your smile is my comfort, your voice is my calm,
       and loving you is my favorite feeling in the world. 🫶<br><br>
 
-      I hope this year brings you endless laughter, soft moments,
-      big dreams coming true, and all the love you deserve —
+      I hope this year brings you soft moments, big dreams coming true,
+      endless laughter, and all the love you deserve —
       especially mine, always. 💕<br><br>
 
-      Stay cute, stay strong, stay my kanmani forever. 🌸
+      Stay cute, stay strong, stay my kanmani forever 🌸
     </p>
     <div class="footer">— With all my love ❤️</div>
   </div>
 
-  <!-- YouTube music -->
+  <!-- YouTube Music (mobile-safe) -->
   <iframe
     id="music"
     width="0"
     height="0"
-    src=""
-    allow="autoplay">
+    allow="autoplay"
+    src="">
   </iframe>
 
+  <!-- Logic -->
   <script>
     function openCard() {
       document.getElementById("intro").style.display = "none";
       document.getElementById("card").style.display = "block";
 
-      document.getElementById("music").src =
-        "https://www.youtube.com/embed/IpFX2vq8HKw?autoplay=1&loop=1&playlist=IpFX2vq8HKw";
+      const iframe = document.getElementById("music");
+
+      iframe.src =
+        "https://www.youtube.com/embed/IpFX2vq8HKw?enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=IpFX2vq8HKw";
+
+      setTimeout(() => {
+        iframe.contentWindow.postMessage(
+          '{"event":"command","func":"unMute","args":""}',
+          "*"
+        );
+      }, 600);
     }
   </script>
 
