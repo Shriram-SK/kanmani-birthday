@@ -230,7 +230,7 @@
         I love you more than words can say 💖
       </div>
 
-      <div class="hint">psst… try tapping twice 😉</div>
+      <div class="hint" id="hint">psst… try tapping twice 😉</div>
     </div>
 
   </div>
@@ -278,7 +278,14 @@
   function revealSecret() {
     if (revealed) return;
     revealed = true;
+  
     document.getElementById("secret").style.display = "block";
+  
+    const hint = document.getElementById("hint");
+    if (hint) {
+      hint.style.display = "none"; // 👈 hides the hint
+    }
+  
     sparkleBurst();
   }
 
@@ -306,4 +313,5 @@
 
 </body>
 </html>
+
 
