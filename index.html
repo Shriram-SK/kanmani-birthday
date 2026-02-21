@@ -76,6 +76,11 @@
       color: #fff;
       overflow: hidden;
       background: transparent;
+
+      /* IMPORTANT: disable text selection */
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
     }
 
     @keyframes popIn {
@@ -165,6 +170,7 @@
 <body>
 
 <script>
+  // Floating hearts
   for (let i = 0; i < 25; i++) {
     const h = document.createElement("div");
     h.className = "heart";
@@ -176,11 +182,13 @@
   }
 </script>
 
+<!-- Intro -->
 <div class="center" id="intro">
   <div class="heart-btn" onclick="openCard()">❤️</div>
   <div class="tap-text">Tap me, Kanmani 💕</div>
 </div>
 
+<!-- Card -->
 <div class="center">
   <div class="card" id="card">
 
@@ -226,8 +234,9 @@
 
 <script>
   let slideIndex = 0;
-  let pressTimer;
   let revealed = false;
+  let pressTimer;
+  let lastTap = 0;
 
   function openCard() {
     document.getElementById("intro").style.display = "none";
@@ -237,19 +246,30 @@
     startSlideshow();
     document.getElementById("bgMusic").play().catch(() => {});
 
-    // Secret listeners (MUST be attached AFTER card is visible)
-    card.addEventListener("touchstart", startPress);
-    card.addEventListener("touchend", cancelPress);
-    card.addEventListener("mousedown", startPress);
-    card.addEventListener("mouseup", cancelPress);
+    // Long-press
+    card.addEventListener("pointerdown", startHold);
+    card.addEventListener("pointerup", cancelHold);
+    card.addEventListener("pointerleave", cancelHold);
+
+    // Double-tap fallback
+    card.addEventListener("click", detectDoubleTap);
   }
 
-  function startPress() {
-    pressTimer = setTimeout(revealSecret, 2000);
+  function startHold(e) {
+    e.preventDefault();
+    pressTimer = setTimeout(revealSecret, 1800);
   }
 
-  function cancelPress() {
+  function cancelHold() {
     clearTimeout(pressTimer);
+  }
+
+  function detectDoubleTap() {
+    const now = Date.now();
+    if (now - lastTap < 350) {
+      revealSecret();
+    }
+    lastTap = now;
   }
 
   function revealSecret() {
