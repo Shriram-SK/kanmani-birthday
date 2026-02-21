@@ -34,12 +34,10 @@
     .center {
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
+      flex-direction: column;
       padding: 20px;
-      position: relative;
       z-index: 2;
     }
 
@@ -72,12 +70,10 @@
       padding: 22px;
       border-radius: 24px;
       box-shadow: 0 20px 50px rgba(0,0,0,0.35);
-      animation: popIn 0.8s ease forwards;
       color: #fff;
       overflow: hidden;
-      background: transparent;
+      animation: popIn 0.8s ease forwards;
 
-      /* IMPORTANT: disable text selection */
       -webkit-user-select: none;
       user-select: none;
       -webkit-touch-callout: none;
@@ -127,6 +123,7 @@
       font-size: 28px;
       margin-bottom: 12px;
       color: #ffd1e8;
+      text-align: center;
     }
 
     p {
@@ -134,7 +131,17 @@
       line-height: 1.65;
     }
 
-    /* Secret message */
+    /* Hint text */
+    .hint {
+      margin-top: 14px;
+      font-size: 13px;
+      text-align: center;
+      opacity: 0.75;
+      font-style: italic;
+      color: #ffd1e8;
+    }
+
+    /* Secret */
     .secret {
       display: none;
       margin-top: 14px;
@@ -170,7 +177,6 @@
 <body>
 
 <script>
-  // Floating hearts
   for (let i = 0; i < 25; i++) {
     const h = document.createElement("div");
     h.className = "heart";
@@ -182,13 +188,11 @@
   }
 </script>
 
-<!-- Intro -->
 <div class="center" id="intro">
   <div class="heart-btn" onclick="openCard()">❤️</div>
   <div class="tap-text">Tap me, Kanmani 💕</div>
 </div>
 
-<!-- Card -->
 <div class="center">
   <div class="card" id="card">
 
@@ -225,6 +229,8 @@
         Kanmani… no matter where life takes us, my heart will always find you.
         I love you more than words can say 💖
       </div>
+
+      <div class="hint">psst… try tapping twice 😉</div>
     </div>
 
   </div>
@@ -246,12 +252,9 @@
     startSlideshow();
     document.getElementById("bgMusic").play().catch(() => {});
 
-    // Long-press
     card.addEventListener("pointerdown", startHold);
     card.addEventListener("pointerup", cancelHold);
     card.addEventListener("pointerleave", cancelHold);
-
-    // Double-tap fallback
     card.addEventListener("click", detectDoubleTap);
   }
 
@@ -275,7 +278,6 @@
   function revealSecret() {
     if (revealed) return;
     revealed = true;
-
     document.getElementById("secret").style.display = "block";
     sparkleBurst();
   }
