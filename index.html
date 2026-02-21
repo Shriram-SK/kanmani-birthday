@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy Birthday Kanmani 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      background: radial-gradient(circle at top, #ffd6e8, #ffc1dc, #ff9ecf);
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 20px;
+      animation: floatUp 8s linear infinite;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(100vh) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-10vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    /* Center container */
+    .center {
+      text-align: center;
+      z-index: 2;
+    }
+
+    /* Big heart button */
+    .heart-btn {
+      font-size: 90px;
+      cursor: pointer;
+      animation: pulse 1.5s infinite;
+      user-select: none;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    .tap-text {
+      margin-top: 10px;
+      font-size: 18px;
+      color: #fff;
+    }
+
+    /* Card */
+    .card {
+      display: none;
+      background: white;
+      width: 90%;
+      max-width: 400px;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      animation: popIn 0.8s ease forwards;
+    }
+
+    @keyframes popIn {
+      from {
+        transform: scale(0.7);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .card h1 {
+      font-family: 'Pacifico', cursive;
+      color: #ff4d88;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    .footer {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #ff4d88;
+    }
+
+    iframe {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating hearts -->
+  <script>
+    for (let i = 0; i < 30; i++) {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (5 + Math.random() * 5) + "s";
+      heart.style.fontSize = (16 + Math.random() * 24) + "px";
+      document.body.appendChild(heart);
+    }
+  </script>
+
+  <!-- Center content -->
+  <div class="center" id="intro">
+    <div class="heart-btn" onclick="openCard()">❤️</div>
+    <div class="tap-text">Tap me, Kanmani 💕</div>
+  </div>
+
+  <!-- Birthday Card -->
+  <div class="card" id="card">
+    <h1>Happy 25th Birthday, Kanmani 💖</h1>
+    <p>
+      To my most precious girl ✨<br><br>
+      Today isn’t just your birthday — it’s the day the world became a little
+      more beautiful because <b>you</b> exist. 💫<br><br>
+
+      Your smile is my comfort, your voice is my calm,
+      and loving you is my favorite feeling in the world. 🫶<br><br>
+
+      I hope this year brings you endless laughter, soft moments,
+      big dreams coming true, and all the love you deserve —
+      especially mine, always. 💕<br><br>
+
+      Stay cute, stay strong, stay my kanmani forever. 🌸
+    </p>
+    <div class="footer">— With all my love ❤️</div>
+  </div>
+
+  <!-- YouTube music -->
+  <iframe
+    id="music"
+    width="0"
+    height="0"
+    src=""
+    allow="autoplay">
+  </iframe>
+
+  <script>
+    function openCard() {
+      document.getElementById("intro").style.display = "none";
+      document.getElementById("card").style.display = "block";
+
+      document.getElementById("music").src =
+        "https://www.youtube.com/embed/IpFX2vq8HKw?autoplay=1&loop=1&playlist=IpFX2vq8HKw";
+    }
+  </script>
+
+</body>
+</html>
